@@ -1,0 +1,56 @@
+// ═══════════════════════════════════════════
+// 1-10 — Décrire une personne
+// ═══════════════════════════════════════════
+const EX_1_10 = [
+  { type:'presentation', label:'L\'apparence', word:'Visok — Vitek — Debel', phonetic:'[VI-sok] [VI-tek] [DE-bel]', translation:'Grand (de taille) — Mince — Gros',
+    cultural:{title:'Décrire sans offenser', text:'Comme partout, sois prudent ! En slovène, on peut dire "vitek" (mince, valorisant) ou "debel" (gros). Pour les descriptions neutres, préfère "normalne postave" (de corpulence normale).'},
+    histoire:{title:'Slovènes célèbres', text:'Melania Trump est née à Sevnica. Le philosophe Slavoj Žižek est mondialement connu. La skieuse Tina Maze — 2 médailles d\'or aux JO 2014. Le cycliste Tadej Pogačar a remporté le Tour de France 2020 et 2021. Le kayakiste Benjamin Savšek — champion olympique 2021. Petite nation, grands champions !'} },
+  { type:'tts_repeat', label:'Apparence physique', word:'Visok, nizek, vitek, debel, mlad, star', phonetic:'[VI-sok, NI-zek, VI-tek, DE-bel, MLAD, STAR]', translation:'Grand, petit, mince, gros, jeune, âgé' },
+  { type:'tts_repeat', label:'Cheveux & yeux', word:'Svetle lase, temne lase, modre oči, zelene oči', phonetic:'[SVET-le LA-se, TEM-ne LA-se, MOD-re O-chi, ze-LE-ne O-chi]', translation:'Cheveux blonds, cheveux sombres, yeux bleus, yeux verts' },
+  { type:'matching', label:'Apparence → français', pairs:[
+    {sl:'Visok',       fr:'Grand (de taille)'},
+    {sl:'Svetle lase', fr:'Cheveux blonds/clairs'},
+    {sl:'Temne lase',  fr:'Cheveux sombres'},
+    {sl:'Modre oči',   fr:'Yeux bleus'},
+    {sl:'Zelene oči',  fr:'Yeux verts'},
+  ]},
+  { type:'presentation', label:'Le caractère', word:'Prijazen — Zabaven — Pameten', phonetic:'[pri-YA-zen] [za-BA-ven] [pa-ME-ten]', translation:'Sympa/Gentil — Drôle/Amusant — Intelligent',
+    cultural:{title:'Le caractère en slovène', text:'Les Slovènes sont souvent décrits comme "rezerviran" (réservés) mais "prijazen" (sympathiques) une fois qu\'on les connaît. C\'est une fierté nationale !'} },
+  { type:'tts_repeat', label:'Caractère', word:'Prijazen, zabaven, pameten, delaven, miren', phonetic:'[pri-YA-zen, za-BA-ven, pa-ME-ten, de-LA-ven, MI-ren]', translation:'Sympa, drôle, intelligent, travailleur, calme' },
+  { type:'matching', label:'Caractère → français', pairs:[
+    {sl:'Prijazen',  fr:'Sympa / Gentil'},
+    {sl:'Zabaven',   fr:'Drôle / Amusant'},
+    {sl:'Pameten',   fr:'Intelligent'},
+    {sl:'Delaven',   fr:'Travailleur'},
+    {sl:'Miren',     fr:'Calme'},
+  ]},
+  { type:'presentation', label:'Comparaisons', word:'Višji od — Nižji od — Enako visok kot', phonetic:'[VI-shyi od] [NI-zhyi od] [e-NA-ko VI-sok kot]', translation:'Plus grand que — Plus petit que — Aussi grand que',
+    cultural:{title:'Comparer en slovène', text:'"Višji od" = plus grand que (od = de/que). "Bolj ... kot" = plus ... que (général). "Manj ... kot" = moins ... que. Exemples : "Ana je višja od Luka" = Ana est plus grande que Luka.'} },
+  { type:'tts_repeat', label:'Comparaisons', word:'Ana je višja od Luka. Marc je bolj pameten kot Rok.', phonetic:'[A-na ye VI-shya od LU-ka] [MARC ye BOL-y pa-ME-ten kot ROK]', translation:'Ana est plus grande que Luka. Marc est plus intelligent que Rok.' },
+  { type:'fill', label:'Phrase à trous', sentence:['Moja mama je ___ od mene. (Ma maman est plus grande que moi)'], blank:'višja', bank:['višja','nižja','mlajša','starejša'] },
+  { type:'story', label:'Histoire', title:'Le profil de dating',
+    narration:"Maja aide son ami Rok à remplir son profil sur une app de rencontres slovène.",
+    dialogue:[
+      {speaker:'Maja', text:'Kako bi se opisal ?', side:'left'},
+      {speaker:'Rok',  text:'Sem visok, vitek in prijazen.', side:'right'},
+      {speaker:'Maja', text:'In tvoja barva oči ?', side:'left'},
+      {speaker:'Rok',  text:'Imam modre oči in temne lase.', side:'right'},
+      {speaker:'Maja', text:'Odlično ! In kakšna dekleta ti so všeč ?', side:'left'},
+      {speaker:'Rok',  text:'Pametna in zabavna dekleta !', side:'right'},
+    ],
+    translation:{
+      'Kako bi se opisal ?':'Comment te décrirais-tu ?',
+      'Sem visok, vitek in prijazen.':'Je suis grand, mince et sympa.',
+      'In tvoja barva oči ?':'Et ta couleur des yeux ?',
+      'Imam modre oči in temne lase.':'J\'ai des yeux bleus et des cheveux sombres.',
+      'Odlično !':'Excellent !',
+      'Kakšna dekleta ti so všeč ?':'Quelles filles tu aimes ?',
+      'Pametna in zabavna dekleta !':'Des filles intelligentes et drôles !',
+    }
+  },
+  { type:'qcm', label:'QCM histoire', question:'Quelle couleur sont les yeux de Rok ?', choices:['Bleus','Verts','Marrons','Noirs'], correct:0 },
+  { type:'qcm', label:'QCM histoire', question:'Comment Rok décrit-il son caractère ?', choices:['Prijazen (sympa)','Pameten (intelligent)','Miren (calme)','Delaven (travailleur)'], correct:0 },
+  { type:'qcm', label:'QCM histoire', question:'Quel type de filles plait à Rok ?', choices:['Intelligentes et drôles','Grandes et blondes','Calmes et douces','Sympas et travailleuses'], correct:0 },
+  { type:'dictee', label:'Dictée', word:'Prijazen', phonetic:'[pri-YA-zen]', hint:'Sympa/Gentil — 8 lettres' },
+  { type:'reconstruct', label:'Reconstitue', sentence:'Ima modre oči in svetle lase.', words:['Ima','modre','oči','in','svetle','lase','.'] },
+];

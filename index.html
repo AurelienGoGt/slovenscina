@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#003DA5">
+<meta name="apple-mobile-web-app-capable" content="true">
+<title>Slovenščina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+
+<!-- ══════════ HOME ══════════ -->
+<div class="scr" id="scr-home">
+  <div class="flag"><span></span><span></span><span></span></div>
+
+  <!-- Hero (populated by renderHome) -->
+  <div class="hero" id="home-hero" style="height:170px"></div>
+
+  <!-- Streak bar -->
+  <div style="padding:13px 14px 4px">
+    <div class="streak-row">
+      <div>🔥</div>
+      <div>
+        <div class="sr-num" id="h-streak">0</div>
+        <div class="sr-lbl">jours consécutifs</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="text-align:right">
+        <div style="font-size:14px;font-weight:700;color:#003DA5" id="h-xp">0 XP</div>
+        <div style="font-size:11px;color:#8a6010">total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level cards -->
+  <div class="home-body" id="lv-cards"></div>
+
+  <!-- Games section -->
+  <div class="games-section">
+    <div class="games-title">Jeux</div>
+    <div class="game-card mille" id="btn-mille" role="button" tabindex="0" aria-label="Lancer le quiz Qui veut gagner des millions">
+      <div class="gc-em">🏆</div>
+      <div>
+        <div class="gc-title">Qui veut gagner des millions ?</div>
+        <div class="gc-sub">Culture slovène · 12 questions · 4 jokers</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav-bar">
+    <button class="nav-btn active" id="nav-home" aria-label="Accueil" aria-current="page">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="nav-lbl">Accueil</span>
+    </button>
+    <button class="nav-btn" id="nav-profile" aria-label="Profil">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="nav-lbl">Profil</span>
+    </button>
+    <button class="nav-btn" id="nav-settings" aria-label="Réglages">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span class="nav-lbl">Réglages</span>
+    </button>
+  </nav>
+</div>
+
+
+<div class="scr out" id="scr-level">
+  <div class="flag"><span></span><span></span><span></span></div>
+  <div style="background:linear-gradient(135deg,#003DA5,#1a4a7a);padding:16px 50px 16px 16px;position:relative;flex-shrink:0">
+    <button class="back-btn" onclick="goHome()" aria-label="Retour">‹</button>
+    <div style="font-family:'Lora',serif;font-size:19px;font-weight:600;color:white" id="lv-title"></div>
+    <div style="font-size:12px;color:rgba(255,255,255,.65);margin-top:3px" id="lv-sub"></div>
+  </div>
+  <button class="cw-level-btn" id="cw-level-btn" aria-label="Ouvrir les mots croisés de ce niveau">
+    <span class="cw-level-btn-em">🔤</span>
+    <div class="cw-level-btn-info">
+      <div class="cw-level-btn-title">Mots croisés</div>
+      <div class="cw-level-btn-sub">Entraîne-toi avec le vocabulaire de ce niveau</div>
+    </div>
+  </button>
+  <div class="level-body" id="lessons-list"></div>
+</div>
+
+<!-- ══════════ LESSON ══════════ -->
+<div class="scr out" id="scr-lesson">
+  <!-- Top bar -->
+  <div class="topbar">
+    <button class="tb-close" onclick="tryClose()" aria-label="Fermer la leçon">✕</button>
+    <div class="xp-wrap"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+    <div class="hearts" id="hearts">❤️❤️❤️</div>
+  </div>
+  <!-- Exercise area -->
+  <div class="ex-area">
+    <div class="ex-card" id="ex-card"></div>
+  </div>
+  <!-- Feedback -->
+  <div class="fb-bar hide" id="fb-bar" aria-live="polite"></div>
+  <!-- Validate -->
+  <div class="lesson-foot">
+    <button class="val-btn" id="val-btn" disabled onclick="doValidate()">Vérifier</button>
+  </div>
+  <!-- Result overlay -->
+  <div class="res-ov" id="res-ov">
+    <div class="res-card">
+      <div class="res-em" id="res-em">⭐</div>
+      <div class="res-title" id="res-title">Leçon terminée !</div>
+      <div class="res-sub" id="res-sub">Bien joué !</div>
+      <div class="res-stats">
+        <div class="res-stat"><div class="rs-num" id="rs-xp">0</div><div class="rs-lbl">XP gagnés</div></div>
+        <div class="res-stat"><div class="rs-num" id="rs-acc">0%</div><div class="rs-lbl">Précision</div></div>
+        <div class="res-stat"><div class="rs-num" id="rs-wds">0</div><div class="rs-lbl">Mots</div></div>
+      </div>
+      <button class="res-btn" onclick="finishLesson()">🎮 Jouer au Speed Game !</button>
+      <button class="res-btn" style="margin-top:8px;background:linear-gradient(135deg,#3a9a5a,#1a6a3a)" onclick="if(APP.lvId)openLevel(APP.lvId);else goHome()">Retour aux leçons</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SPEED GAME ══════════ -->
+<div class="scr out" id="scr-game">
+  <div class="flag"><span></span><span></span><span></span></div>
+  <!-- HUD -->
+  <div style="background:#020c1e;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button onclick="endGame()" style="background:rgba(255,255,255,.1);border:none;color:white;padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit">✕ Quitter</button>
+    <div style="flex:1;height:8px;background:rgba(255,255,255,.12);border-radius:6px;overflow:hidden">
+      <div id="gtimerbar" style="height:100%;border-radius:6px;transition:width .1s linear;width:100%;background:linear-gradient(90deg,#e8a832,#f0b020)"></div>
+    </div>
+    <div style="color:#e8a832;font-weight:700;font-size:15px;min-width:24px;text-align:center" id="gtimer">30</div>
+  </div>
+  <!-- Score row -->
+  <div style="background:#030f22;padding:6px 16px;display:flex;gap:18px;flex-shrink:0">
+    <div style="text-align:center"><div style="font-size:17px;font-weight:700;color:white" id="gscore">0</div><div style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px">SCORE</div></div>
+    <div style="text-align:center"><div style="font-size:17px;font-weight:700;color:#e8a832" id="gcombo">0</div><div style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px">COMBO</div></div>
+    <div style="flex:1;text-align:center;align-self:center">
+      <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.5px">Traduis :</div>
+      <div style="font-family:'Lora',serif;font-size:18px;font-weight:600;color:white;margin-top:2px" id="gquestion">...</div>
+    </div>
+  </div>
+  <!-- Field -->
+  <div id="gfield">
+    <div id="gdanger"><span style="font-size:11px;color:rgba(226,75,74,.6);letter-spacing:2px">DANGER</span></div>
+  </div>
+  <!-- Game over overlay -->
+  <div class="res-ov" id="gameover-ov">
+    <div class="res-card">
+      <div class="res-em" id="go-em">⭐</div>
+      <div class="res-title">Game Over</div>
+      <div class="res-sub" id="go-sub">Bien joué !</div>
+      <div class="res-stats">
+        <div class="res-stat"><div class="rs-num" id="go-words">0</div><div class="rs-lbl">Mots</div></div>
+        <div class="res-stat"><div class="rs-num" id="go-bonus">+0</div><div class="rs-lbl">Bonus XP</div></div>
+        <div class="res-stat"><div class="rs-num" id="go-combo">0</div><div class="rs-lbl">Max Combo</div></div>
+      </div>
+      <button class="res-btn" onclick="endGame()">Retour aux leçons</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SETTINGS ══════════ -->
+<div class="scr out" id="scr-settings">
+  <div class="flag"><span></span><span></span><span></span></div>
+  <div style="background:linear-gradient(135deg,#003DA5,#1a4a7a);padding:16px 50px 16px 16px;position:relative;flex-shrink:0">
+    <button class="back-btn" onclick="goHome()" aria-label="Retour">‹</button>
+    <div style="font-family:'Lora',serif;font-size:19px;font-weight:600;color:white">Réglages</div>
+  </div>
+  <div class="settings-body">
+    <div class="sett-sec">
+      <div class="sett-sec-title">🎵 Musique des jeux</div>
+      <div class="sett-row">
+        <div><div class="sett-lbl">Volume</div><div class="sett-sub">0 = muet · 1 = max</div></div>
+        <input type="range" min="0" max="1" step="0.05" value="0.75" id="music-vol" onchange="savePref()">
+      </div>
+    </div>
+    <div class="sett-sec">
+      <div class="sett-sec-title">🔊 Synthèse vocale</div>
+      <div class="sett-row">
+        <div><div class="sett-lbl">Voix activée</div><div class="sett-sub" id="tts-lang-label">TTS slovène</div></div>
+        <label class="toggle"><input type="checkbox" id="tts-on" onchange="savePref()" checked><div class="tg-track"></div><div class="tg-thumb"></div></label>
+      </div>
+      <div class="sett-row">
+        <div><div class="sett-lbl">Vitesse</div><div class="sett-sub">0.6 = lent · 1.0 = normal</div></div>
+        <input type="range" min="0.5" max="1.4" step="0.05" value="1.05" id="tts-rate" onchange="savePref()" style="width:90px">
+      </div>
+      <button class="sett-btn" onclick="testVoice()">🔊 Tester la voix</button>
+    </div>
+    <div class="sett-sec">
+      <div class="sett-sec-title">🎙️ Voix naturelle (optionnel)</div>
+      <div style="font-size:12px;color:var(--soft);margin-bottom:10px;line-height:1.6" id="voice-desc">
+        <b style="color:var(--si-blue)">VoiceRSS</b> — voix slovène féminine "Maja", naturelle.<br>
+        Gratuit : 350 appels/jour. Inscription sur <b>voicerss.org</b>
+      </div>
+      <div class="sett-row" style="flex-direction:column;align-items:stretch;gap:8px">
+        <div class="sett-lbl">Clé VoiceRSS</div>
+        <input class="sett-inp" type="password" id="vr-key" placeholder="votre-clé-voicerss">
+      </div>
+      <div style="height:12px"></div>
+      <div style="font-size:12px;color:var(--soft);margin-bottom:8px;line-height:1.6">
+        <b style="color:#8020c0">ElevenLabs</b> — qualité premium (payant après quota)
+      </div>
+      <div class="sett-row" style="flex-direction:column;align-items:stretch;gap:8px">
+        <div class="sett-lbl">Clé ElevenLabs</div>
+        <input class="sett-inp" type="password" id="el-key" placeholder="xi-api-key...">
+        <div style="font-size:11px;color:var(--soft)" id="el-status">Voix active : Web Speech (système)</div>
+      </div>
+      <button class="sett-btn" onclick="saveKey()">💾 Enregistrer</button>
+    </div>
+
+    <div class="sett-sec">
+      <div class="sett-sec-title">⚠️ Danger</div>
+      <button class="sett-btn" style="background:linear-gradient(135deg,#b01a1a,#e24b4a)" onclick="resetAll()">🗑️ Effacer toute la progression</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PROFILE ══════════ -->
+<div class="scr out" id="scr-profile">
+  <div class="flag"><span></span><span></span><span></span></div>
+  <div style="background:linear-gradient(135deg,#003DA5,#1a4a7a);padding:16px 50px 16px 16px;position:relative;flex-shrink:0">
+    <button class="back-btn" onclick="goHome()" aria-label="Retour">‹</button>
+    <div style="font-family:'Lora',serif;font-size:19px;font-weight:600;color:white">Mon profil</div>
+  </div>
+  <div class="profile-body">
+    <div class="sec">Statistiques</div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-n" id="p-streak">0</div><div class="stat-l">🔥 Jours de suite</div></div>
+      <div class="stat-card"><div class="stat-n" id="p-xp">0</div><div class="stat-l">⭐ XP total</div></div>
+      <div class="stat-card"><div class="stat-n" id="p-les">0</div><div class="stat-l">📚 Leçons faites</div></div>
+      <div class="stat-card"><div class="stat-n" id="p-wds">0</div><div class="stat-l">💬 Mots appris</div></div>
+    </div>
+    <div class="sec">Badges</div>
+    <div class="badges-wrap" id="badges-wrap"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Volume popup (shared between game screens) -->
+<div id="vol-popup" class="vol-popup" role="dialog" aria-label="Volume musique">
+  <div class="vol-label">🎵 Volume</div>
+  <input type="range" class="vol-slider" id="vol-slider" min="0" max="1" step="0.05" value="0.75" aria-label="Volume">
+  <div class="vol-pct" id="vol-pct">75%</div>
+</div>
+
+<!-- ══════════ CROSSWORD ══════════ -->
+<div class="scr out" id="scr-crossword">
+  <div class="flag"><span></span><span></span><span></span></div>
+  <div style="background:linear-gradient(135deg,#003DA5,#1a4a7a);padding:14px 50px 14px 16px;position:relative;flex-shrink:0">
+    <button class="back-btn" id="cw-back" aria-label="Retour">‹</button>
+    <div style="font-family:'Lora',serif;font-size:18px;font-weight:600;color:white">🔤 Mots Croisés</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px">Tape une définition pour sélectionner le mot</div>
+    <button class="vol-btn" id="cw-vol-btn" aria-label="Volume musique">🔊</button>
+  </div>
+  <!-- Active word input bar -->
+  <div id="cw-bar" class="cw-bar hide">
+    <div id="cw-bar-clue" class="cw-bar-clue"></div>
+    <input id="cw-inp" class="cw-inp" type="text" autocomplete="off" autocorrect="off"
+           autocapitalize="characters" spellcheck="false" placeholder="______">
+  </div>
+  <!-- Grid -->
+  <div class="cw-wrap">
+    <div id="cw-grid" class="cw-grid"></div>
+  </div>
+  <!-- Clue lists -->
+  <div class="cw-clues-wrap">
+    <div class="cw-dir-title">→ Horizontalement</div>
+    <div id="cw-h-clues" class="cw-clues-list"></div>
+    <div class="cw-dir-title">↓ Verticalement</div>
+    <div id="cw-v-clues" class="cw-clues-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ MILLIONNAIRE ══════════ -->
+<div class="scr out" id="scr-mille">
+  <div class="mille-wrap">
+    <div class="mille-top">
+      <button class="mille-quit-btn" id="mille-quit" aria-label="Quitter le quiz">✕ Quitter</button>
+      <div id="mille-step" class="mille-step-lbl">Question 1 / 12</div>
+      <button class="vol-btn" id="mille-vol-btn" aria-label="Volume musique">🔊</button>
+    </div>
+    <div id="mille-strip" class="mille-strip"></div>
+    <div class="mille-body">
+      <div id="mille-prize" class="mille-prize">💰 50 XP</div>
+      <div id="mille-cat" class="mille-cat"></div>
+      <div id="mille-q" class="mille-q">...</div>
+      <div id="mille-choices" class="mille-choices"></div>
+    </div>
+    <div id="mille-jokers" class="mille-jokers"></div>
+  </div>
+  <!-- Result overlay -->
+  <div class="mille-ov" id="mille-ov">
+    <div class="mille-ov-card">
+      <div id="mille-ov-em" class="mille-ov-em">🏆</div>
+      <div id="mille-ov-title" class="mille-ov-title">UN MILLION !</div>
+      <div id="mille-ov-xp" class="mille-ov-xp">+1 000 000 XP</div>
+      <div id="mille-ov-sub" class="mille-ov-sub">Félicitations !</div>
+      <button class="res-btn" id="mille-again">Rejouer</button>
+      <button class="res-btn" id="mille-home" style="margin-top:8px;background:linear-gradient(135deg,#1a4a7a,#003DA5)">Retour à l'accueil</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<!-- DATA -->
+<script src="data/sl/structure.js"></script>
+<script src="data/sl/lesson_01_salutations.js"></script>
+<script src="data/sl/lesson_02_alphabet_1.js"></script>
+<script src="data/sl/lesson_03_alphabet_2.js"></script>
+<script src="data/sl/lesson_04_alphabet_3.js"></script>
+<script src="data/sl/lesson_05_chiffres_1_10.js"></script>
+<script src="data/sl/lesson_06_nombres_11_100.js"></script>
+<script src="data/sl/lesson_07_nombres_prix.js"></script>
+<script src="data/sl/lesson_08_couleurs.js"></script>
+<script src="data/sl/lesson_09_adjectifs.js"></script>
+<script src="data/sl/lesson_10_decrire.js"></script>
+<script src="data/sl/lesson_11_famille_proche.js"></script>
+<script src="data/sl/lesson_12_famille_elargie.js"></script>
+<script src="data/sl/lesson_13_jours_mois.js"></script>
+<script src="data/sl/lesson_14_meteo.js"></script>
+<script src="data/sl/lesson_15_heure.js"></script>
+<script src="data/sl/lesson_16_se_presenter.js"></script>
+<script src="data/sl/lesson_17_quotidien.js"></script>
+<script src="data/sl/lesson_18_maison.js"></script>
+<script src="data/sl/lesson_19_courses.js"></script>
+<script src="data/sl/lesson_20_en_ville.js"></script>
+<script src="data/registry.js"></script>
+
+<!-- APP LOGIC -->
+<script src="js/engine.js"></script>
+<script src="js/game.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+// ═══════════════════════════════════════════
+// 1-16 — Se présenter
+// ═══════════════════════════════════════════
+const EX_1_16 = [
+  { type:'presentation', label:'Découverte', word:'Jaz sem... / Sem...', phonetic:'[YAZ SEM] / [SEM]', translation:'Je suis...',
+    cultural:{title:'Pronom optionnel', text:'"Jaz" (je) est souvent omis — la terminaison du verbe suffit. "Sem Ana" = "Je suis Ana". Mais "Jaz sem Ana" est aussi correct et clair. Commence avec le pronom pour t\'en souvenir !'},
+    histoire:{title:'Plurilinguisme slovène', text:'Presque tous les jeunes Slovènes parlent anglais couramment. Beaucoup parlent aussi allemand et croate. Deux langues officielles minoritaires : l\'italien (Koper, Piran) et le hongrois (Murska Sobota). Cette ouverture aux langues vient de siècles de coexistence avec les voisins.'} },
+  { type:'tts_repeat', label:'Se présenter', word:'Jaz sem Marc. Sem iz Francije. Imam trideset let.', phonetic:'[YAZ SEM MARC. SEM IZ FRAN-tsi-ye. I-mam TRI-deset LET.]', translation:'Je suis Marc. Je suis de France. J\'ai trente ans.' },
+  { type:'matching', label:'Expressions de présentation', pairs:[
+    {sl:'Jaz sem...',      fr:'Je suis...'},
+    {sl:'Sem iz...',       fr:'Je suis de...'},
+    {sl:'Imam ... let.',   fr:"J'ai ... ans."},
+    {sl:'Ime mi je...',    fr:'Je m\'appelle...'},
+    {sl:'Kako ti je ime ?',fr:'Comment tu t\'appelles ?'},
+  ]},
+  { type:'fill', label:'Phrase à trous', sentence:['Jaz ___ Ana. Sem iz Maribora.'], blank:'sem', bank:['sem','imam','govorim','si'] },
+  { type:'tts_repeat', label:'Les pays', word:'Francija, Belgija, Švica, Italija, Anglija, Avstrija', phonetic:'[FRAN-tsi-ya, BEL-gi-ya, SHVI-tsa, i-TA-li-ya, ang-LI-ya, av-STRI-ya]', translation:'France, Belgique, Suisse, Italie, Angleterre, Autriche' },
+  { type:'matching', label:'Pays → français', pairs:[
+    {sl:'Francija', fr:'France'},
+    {sl:'Belgija',  fr:'Belgique'},
+    {sl:'Italija',  fr:'Italie'},
+    {sl:'Avstrija', fr:'Autriche'},
+    {sl:'Nemčija',  fr:'Allemagne'},
+  ]},
+  { type:'tts_repeat', label:'Les langues', word:'Govorim slovensko, francosko, angleško, nemško.', phonetic:'[go-VO-rim slo-VEN-sko, fran-TSOS-ko, ang-LESH-ko, NEM-shko.]', translation:'Je parle slovène, français, anglais, allemand.' },
+  { type:'tts_repeat', label:'Les métiers', word:'Sem zdravnik, učitelj, inženir, pravnik, kuhar.', phonetic:'[SEM ZDRAV-nik, u-CHI-tel, in-ZHE-nir, PRAV-nik, KU-har.]', translation:'Je suis médecin, enseignant, ingénieur, avocat, cuisinier.' },
+  { type:'matching', label:'Métiers → français', pairs:[
+    {sl:'Zdravnik',  fr:'Médecin'},
+    {sl:'Učitelj',   fr:'Enseignant'},
+    {sl:'Inženir',   fr:'Ingénieur'},
+    {sl:'Pravnik',   fr:'Avocat'},
+    {sl:'Kuhar',     fr:'Cuisinier'},
+  ]},
+  { type:'story', label:'Histoire', title:'À la gare de Ljubljana',
+    narration:"Marc vient d\'arriver à Ljubljana. Sur le quai, il rencontre Ema qui rentre d\'une conférence médicale à Vienne.",
+    dialogue:[
+      {speaker:'Ema',  text:'Oprostite, govorite slovensko ?', side:'left'},
+      {speaker:'Marc', text:'Malo — se učim. Sem iz Francije. Ime mi je Marc.', side:'right'},
+      {speaker:'Ema',  text:'Lepo ! Jaz sem Ema. Sem zdravnica. Kakšen poklic imate vi ?', side:'left'},
+      {speaker:'Marc', text:'Sem inženir. Delam v slovenskem podjetju.', side:'right'},
+      {speaker:'Ema',  text:'Super ! Govorite odlično slovensko za začetnika !', side:'left'},
+      {speaker:'Marc', text:'Hvala ! Se učim vsak dan. Je težko, ampak zanimivo !', side:'right'},
+    ],
+    translation:{
+      'Govorite slovensko ?':'Vous parlez slovène ?',
+      'Malo — se učim.':'Un peu — j\'apprends.',
+      'Kakšen poklic imate vi ?':'Quel est votre métier ?',
+      'Delam v slovenskem podjetju.':'Je travaille dans une entreprise slovène.',
+      'Odlično slovensko za začetnika !':'Un slovène excellent pour un débutant !',
+      'Se učim vsak dan.':'J\'apprends chaque jour.',
+      'Je težko, ampak zanimivo !':'C\'est difficile mais intéressant !',
+    }
+  },
+  { type:'qcm', label:'QCM histoire', question:'Quel est le métier d\'Ema ?', choices:['Médecin','Ingénieure','Enseignante','Avocate'], correct:0 },
+  { type:'qcm', label:'QCM histoire', question:'D\'où vient Marc ?', choices:['De France','De Belgique','De Suisse','D\'Autriche'], correct:0 },
+  { type:'qcm', label:'QCM histoire', question:'Comment Marc apprend-il le slovène ?', choices:['Chaque jour','En école','Avec un prof','Pas du tout'], correct:0 },
+  { type:'dictee', label:'Dictée', word:'Govorim', phonetic:'[go-VO-rim]', hint:'Je parle — 7 lettres' },
+  { type:'dialogue', label:'À toi !', lines:[
+    {speaker:'Ana', text:'Zdravo ! Kako ti je ime ?', side:'left'},
+    {speaker:'Toi', text:'Zdravo ! Ime mi je ___.', side:'right', blank:'Marc', hint:'ton prénom'},
+    {speaker:'Ana', text:'Odkod si ?', side:'left'},
+    {speaker:'Toi', text:'Sem iz ___.', side:'right', blank:'Francije', hint:'de France → Francije'},
+    {speaker:'Ana', text:'Kakšen poklic imaš ?', side:'left'},
+    {speaker:'Toi', text:'Sem ___.',   side:'right', blank:'inženir', hint:'ingénieur'},
+  ]},
+];
