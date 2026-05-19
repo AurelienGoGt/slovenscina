@@ -30,6 +30,8 @@ FILES_ORDER = [
     'js/barve.js',
     'js/trznica.js',
     'js/motsmeles.js',
+    'js/anagramme.js',
+    'js/convoquiz.js',
     'js/app.js',
 ]
 

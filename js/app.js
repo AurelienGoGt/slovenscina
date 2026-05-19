@@ -115,6 +115,7 @@ async function speak(text) {
   const p = LS.prefs;
   if (!p.tts) return;
 
+  // ElevenLabs — premium neural
   if (p.elKey) {
     try {
       const r = await fetch('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', {
@@ -122,38 +123,55 @@ async function speak(text) {
         headers: { 'xi-api-key': p.elKey, 'Content-Type': 'application/json', 'Accept': 'audio/mpeg' },
         body: JSON.stringify({ text, model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.45, similarity_boost: 0.8 } })
       });
+      if (r.ok) { const blob = await r.blob(); await playAudioUrl(URL.createObjectURL(blob), false); return; }
+    } catch {}
+  }
+
+  // Microsoft Azure Neural — voix sl-SI-PetraNeural (gratuit 500k car/mois)
+  if (p.azKey && p.azRegion) {
+    try {
+      const cacheKey = 'az_' + p.azRegion + '_' + text;
+      if (_audioCache[cacheKey]) { await playAudioUrl(_audioCache[cacheKey], false); return; }
+      const safe = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const rate = p.rate ? (p.rate < 1 ? '-10%' : p.rate > 1 ? '+10%' : '0%') : '0%';
+      const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='sl-SI'><voice name='sl-SI-PetraNeural'><prosody rate='${rate}'>${safe}</prosody></voice></speak>`;
+      const r = await fetch(`https://${p.azRegion}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': p.azKey,
+          'Content-Type': 'application/ssml+xml',
+          'X-Microsoft-OutputFormat': 'audio-24khz-48kbitrate-mono-mp3',
+        },
+        body: ssml,
+      });
       if (r.ok) {
         const blob = await r.blob();
-        await playAudioUrl(URL.createObjectURL(blob), false);
-        return;
+        const url = URL.createObjectURL(blob);
+        _audioCache[cacheKey] = url;
+        await playAudioUrl(url, false); return;
       }
     } catch {}
   }
 
+  // VoiceRSS — Maja (décente)
   if (p.vrKey) {
     try {
       const cacheKey = 'vr_sl_' + text;
-      if (_audioCache[cacheKey]) {
-        await playAudioUrl(_audioCache[cacheKey], false); return;
-      }
+      if (_audioCache[cacheKey]) { await playAudioUrl(_audioCache[cacheKey], false); return; }
       const url = 'https://api.voicerss.org/?' + new URLSearchParams({
-        key: p.vrKey, hl: 'sl-si', v: 'Maja',
-        r: '0', c: 'mp3', f: '44khz_16bit_stereo', src: text
+        key: p.vrKey, hl: 'sl-si', v: 'Maja', r: '0', c: 'mp3', f: '44khz_16bit_stereo', src: text
       });
       _audioCache[cacheKey] = url;
       await playAudioUrl(url, false); return;
     } catch {}
   }
 
+  // Web Speech — fallback système
   if (window.speechSynthesis) {
     stopAudio();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'sl-SI'; u.rate = 0.90; u.pitch = 1.15; u.volume = 1.0;
-    const trySpeak = () => {
-      const best = findBestVoice();
-      if (best) u.voice = best;
-      speechSynthesis.speak(u);
-    };
+    u.lang = 'sl-SI'; u.rate = p.rate || 0.90; u.pitch = 1.1; u.volume = 1.0;
+    const trySpeak = () => { const best = findBestVoice(); if (best) u.voice = best; speechSynthesis.speak(u); };
     if (speechSynthesis.getVoices().length) { trySpeak(); }
     else { speechSynthesis.onvoiceschanged = () => { speechSynthesis.onvoiceschanged = null; findBestVoice(); trySpeak(); }; }
   }
@@ -323,18 +341,22 @@ function loadSettingsUI() {
   const p = LS.prefs;
   document.getElementById('el-key').value = p.elKey || '';
   document.getElementById('vr-key').value = p.vrKey || '';
+  document.getElementById('az-key').value = p.azKey || '';
+  document.getElementById('az-region').value = p.azRegion || 'westeurope';
   document.getElementById('tts-on').checked = p.tts !== false;
   document.getElementById('tts-rate').value = String(p.rate || 1.05);
   document.getElementById('music-vol').value = String(getVol());
-  const active = p.elKey ? 'ElevenLabs' : p.vrKey ? 'VoiceRSS (Maja)' : 'Web Speech (système)';
+  const active = p.elKey ? 'ElevenLabs' : (p.azKey && p.azRegion) ? 'Azure Neural (Petra)' : p.vrKey ? 'VoiceRSS (Maja)' : 'Web Speech (système)';
   document.getElementById('el-status').textContent = 'Voix active : ' + active;
 }
 function saveKey() {
   const p = LS.prefs;
-  p.elKey = document.getElementById('el-key').value.trim();
-  p.vrKey = document.getElementById('vr-key').value.trim();
+  p.elKey    = document.getElementById('el-key').value.trim();
+  p.vrKey    = document.getElementById('vr-key').value.trim();
+  p.azKey    = document.getElementById('az-key').value.trim();
+  p.azRegion = document.getElementById('az-region').value.trim() || 'westeurope';
   LS.savePr(p);
-  const active = p.elKey ? 'ElevenLabs' : p.vrKey ? 'VoiceRSS (Maja)' : 'Web Speech (système)';
+  const active = p.elKey ? 'ElevenLabs' : (p.azKey && p.azRegion) ? 'Azure Neural (Petra)' : p.vrKey ? 'VoiceRSS (Maja)' : 'Web Speech (système)';
   document.getElementById('el-status').textContent = '✓ Voix active : ' + active;
   toast('Enregistré !');
 }
@@ -450,6 +472,23 @@ document.getElementById('btn-motsmeles').addEventListener('keydown', e => { if (
 document.getElementById('mm-quit').addEventListener('click', () => { if (MM.timer) clearInterval(MM.timer); MM.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
 document.getElementById('mm-again').addEventListener('click', startMotsMeles);
 document.getElementById('mm-home').addEventListener('click', () => { if (MM.timer) clearInterval(MM.timer); MM.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+
+// Anagramme
+document.getElementById('btn-anagramme').addEventListener('click', startAnagramme);
+document.getElementById('btn-anagramme').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') startAnagramme(); });
+document.getElementById('an-quit').addEventListener('click', () => { if (AN.hintTimer) clearTimeout(AN.hintTimer); AN.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+document.getElementById('an-again').addEventListener('click', startAnagramme);
+document.getElementById('an-home').addEventListener('click', () => { if (AN.hintTimer) clearTimeout(AN.hintTimer); AN.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+
+// Convoquiz
+document.getElementById('btn-convoquiz').addEventListener('click', startConvoquiz);
+document.getElementById('btn-convoquiz').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') startConvoquiz(); });
+document.getElementById('cq-quit').addEventListener('click', () => { CQ.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+document.getElementById('cq-again').addEventListener('click', startConvoquiz);
+document.getElementById('cq-home').addEventListener('click', () => { CQ.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+document.getElementById('cq-speak-btn').addEventListener('click', () => {
+  if (CQ.pool[CQ.round]) cqSpeak(CQ.pool[CQ.round], CQ.answered);
+});
 
 // Volume popup
 document.getElementById('mille-vol-btn').addEventListener('click', toggleVolPopup);

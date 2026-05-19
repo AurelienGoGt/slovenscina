@@ -485,3 +485,52 @@ button:focus-visible{outline:2.5px solid var(--si-blue);outline-offset:2px;borde
 .mm-dot{font-size:18px;color:rgba(255,255,255,.25);line-height:1;flex-shrink:0}
 .mm-check{font-size:13px;color:#52b788;flex-shrink:0}
 .mm-clue-fr{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── ANAGRAMME GAME CARD ── */
+.game-card.anagramme{background:linear-gradient(160deg,#faf5ff,#ede9fe);border-color:rgba(109,40,217,.2);animation:an-glow 4s ease-in-out infinite 0.5s}
+@keyframes an-glow{0%,100%{box-shadow:0 2px 12px rgba(109,40,217,.07)}50%{box-shadow:0 6px 22px rgba(109,40,217,.22)}}
+
+/* ── CONVOQUIZ GAME CARD ── */
+.game-card.convoquiz{background:linear-gradient(160deg,#f0fdf4,#d1fae5);border-color:rgba(5,150,105,.2);animation:cq-glow 4s ease-in-out infinite 1.5s}
+@keyframes cq-glow{0%,100%{box-shadow:0 2px 12px rgba(5,150,105,.07)}50%{box-shadow:0 6px 22px rgba(5,150,105,.22)}}
+
+/* ── AZURE SETTINGS BADGE ── */
+.sett-voice-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:8px;letter-spacing:.5px}
+.sett-voice-badge.az{background:rgba(0,120,212,.12);color:#0078d4;border:1px solid rgba(0,120,212,.25)}
+
+/* ── ANAGRAMME SCREEN ── */
+.an-wrap{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,#160030,#2e0d5a)}
+.an-header{display:flex;align-items:center;gap:10px;padding:10px 14px;flex-shrink:0}
+.an-header-mid{display:flex;align-items:center;gap:10px;flex:1}
+.an-round{font-size:12px;color:rgba(255,255,255,.45);white-space:nowrap}
+.an-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 16px 20px;gap:18px}
+.an-fr-label{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.an-fr-word{font-family:'Lora',serif;font-size:30px;font-weight:700;color:white;text-align:center}
+.an-slots{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;min-height:48px}
+.an-slot{width:42px;height:48px;border-radius:10px;border:2px dashed rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:rgba(255,255,255,.25);background:rgba(255,255,255,.04);font-family:monospace;transition:all .18s}
+.an-slot.an-slot-filled{border-style:solid;border-color:rgba(255,255,255,.45);color:white;background:rgba(255,255,255,.12)}
+.an-slot.an-slot-hint{border-color:#e8a832;color:#e8a832;background:rgba(232,168,50,.12)}
+.an-slots.an-flash-ok .an-slot-filled{animation:correct-pop .45s cubic-bezier(.34,1.56,.64,1);border-color:#52b788;color:#52b788}
+.an-slots.an-flash-ko .an-slot-filled{animation:wrong-shake .42s ease;border-color:#e24b4a;color:#e24b4a}
+.an-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.an-chip{width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.28);color:white;font-size:19px;font-weight:700;font-family:monospace;cursor:pointer;transition:transform .1s,background .15s}
+.an-chip:active:not(:disabled){transform:scale(.88);background:rgba(255,255,255,.28)}
+.an-chip.an-chip-used{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);cursor:default;visibility:hidden}
+.an-del-btn{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);padding:9px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.an-del-btn:active{background:rgba(255,255,255,.18)}
+
+/* ── CONVOQUIZ SCREEN ── */
+.cq-wrap{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,#021a10,#062e18)}
+.cq-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 16px 20px;gap:12px;overflow-y:auto}
+.cq-lesson{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.cq-bubble-wrap{width:100%;max-width:360px}
+.cq-bubble{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:18px 18px 18px 4px;padding:14px 18px;width:100%}
+.cq-speaker{font-size:10.5px;font-weight:700;color:var(--gold);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.cq-text{font-family:'Lora',serif;font-size:17px;color:white;line-height:1.5}
+.cq-fr{font-size:12.5px;color:rgba(255,255,255,.4);width:100%;max-width:360px;line-height:1.4}
+.cq-speak-btn{width:40px;height:40px;font-size:18px}
+.cq-choices{width:100%;max-width:360px;display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.cq-choice{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:white;font-size:15px;font-weight:600;padding:14px 16px;cursor:pointer;font-family:inherit;transition:background .15s;text-align:center;font-family:'Lora',serif}
+.cq-choice:active:not(:disabled){background:rgba(255,255,255,.18)}
+.cq-choice.cq-ok{background:rgba(82,183,136,.25);border-color:#52b788;animation:correct-pop .45s cubic-bezier(.34,1.56,.64,1)}
+.cq-choice.cq-ko{background:rgba(226,75,74,.2);border-color:#e24b4a;animation:wrong-shake .42s ease}
