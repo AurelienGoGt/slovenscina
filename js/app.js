@@ -444,6 +444,13 @@ document.getElementById('tz-quit').addEventListener('click', () => { if (TZ.time
 document.getElementById('tz-again').addEventListener('click', startTrznica);
 document.getElementById('tz-home').addEventListener('click', () => { if (TZ.timer) clearInterval(TZ.timer); nav('scr-home', 'back'); setActiveNav('nav-home'); });
 
+// Mots Mêlés
+document.getElementById('btn-motsmeles').addEventListener('click', startMotsMeles);
+document.getElementById('btn-motsmeles').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') startMotsMeles(); });
+document.getElementById('mm-quit').addEventListener('click', () => { if (MM.timer) clearInterval(MM.timer); MM.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+document.getElementById('mm-again').addEventListener('click', startMotsMeles);
+document.getElementById('mm-home').addEventListener('click', () => { if (MM.timer) clearInterval(MM.timer); MM.active = false; nav('scr-home', 'back'); setActiveNav('nav-home'); });
+
 // Volume popup
 document.getElementById('mille-vol-btn').addEventListener('click', toggleVolPopup);
 document.getElementById('cw-vol-btn').addEventListener('click', toggleVolPopup);

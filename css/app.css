@@ -453,3 +453,34 @@ button:focus-visible{outline:2.5px solid var(--si-blue);outline-offset:2px;borde
 .tz-item-lbl{font-size:11px;font-weight:600;color:rgba(255,255,255,.65);text-align:center;line-height:1.2}
 .tz-item.tz-correct{background:rgba(82,183,136,.3);border-color:#52b788;animation:correct-pop .45s cubic-bezier(.34,1.56,.64,1)}
 .tz-item.tz-wrong{background:rgba(226,75,74,.25);border-color:#e24b4a;animation:wrong-shake .42s ease}
+.tz-speak-btn{margin-top:5px}
+
+/* ── GAME SPEAK BUTTON (shared Barve + Tržnica) ── */
+.game-speak-btn{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.game-speak-btn:active{background:rgba(255,255,255,.28)}
+
+/* ── MOTSMELES GAME CARD ── */
+.game-card.motsmeles{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:rgba(37,99,235,.15);animation:mm-glow 4s ease-in-out infinite 2s}
+@keyframes mm-glow{0%,100%{box-shadow:0 2px 12px rgba(37,99,235,.07)}50%{box-shadow:0 6px 22px rgba(37,99,235,.22)}}
+
+/* ── MOTS MÊLÉS SCREEN ── */
+.mm-wrap{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,#0d1a35,#0f2a52);overflow:hidden}
+.mm-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;flex-shrink:0;gap:10px}
+.mm-hud{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.mm-timer-track{flex:1;height:6px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden}
+.mm-timer-bar{height:100%;background:#52b788;transition:width 1s linear,background .5s}
+.mm-timer-val{font-size:15px;font-weight:700;color:var(--gold);min-width:36px;text-align:right}
+.mm-found-ct{font-size:18px;font-weight:700;color:white}
+.mm-found-lbl{font-size:13px;color:rgba(255,255,255,.4)}
+.mm-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;padding:4px 12px 6px;flex-shrink:0;touch-action:none;user-select:none}
+.mm-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:monospace;border-radius:6px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.8);cursor:pointer;transition:background .1s,color .1s}
+.mm-cell.mm-sel{background:rgba(232,168,50,.5);color:white}
+.mm-cell.mm-found{background:rgba(82,183,136,.45);color:white;animation:correct-pop .4s cubic-bezier(.34,1.56,.64,1)}
+.mm-clues-wrap{flex:1;overflow-y:auto;padding:8px 14px 16px}
+.mm-clues-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
+.mm-clues-list{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.mm-clue{font-size:12.5px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.05);transition:all .3s}
+.mm-clue.mm-clue-found{color:rgba(82,183,136,.9);background:rgba(82,183,136,.12)}
+.mm-dot{font-size:18px;color:rgba(255,255,255,.25);line-height:1;flex-shrink:0}
+.mm-check{font-size:13px;color:#52b788;flex-shrink:0}
+.mm-clue-fr{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

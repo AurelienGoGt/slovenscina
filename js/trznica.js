@@ -78,6 +78,8 @@ function trznicaRender() {
   const qEl = document.getElementById('tz-question');
   qEl.textContent = q.target.fr;
   qEl.classList.remove('tz-q-anim'); void qEl.offsetWidth; qEl.classList.add('tz-q-anim');
+  document.getElementById('tz-speak-btn').onclick = () => { if (typeof speak === 'function') speak(q.target.sl); };
+  if (typeof speak === 'function') speak(q.target.sl);
 
   const grid = document.getElementById('tz-grid');
   grid.innerHTML = '';

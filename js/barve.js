@@ -57,6 +57,7 @@ function barveRender() {
     const lbl = document.createElement('div');
     lbl.className = 'bv-fr-lbl'; lbl.textContent = q.target.fr;
     display.appendChild(lbl);
+    display.appendChild(bvSpeakBtn(q.target.sl));
 
     bvOpts4(q.target).forEach(opt => {
       const btn = document.createElement('button');
@@ -70,6 +71,7 @@ function barveRender() {
     const word = document.createElement('div');
     word.className = 'bv-sl-word'; word.textContent = q.target.sl;
     display.appendChild(word);
+    display.appendChild(bvSpeakBtn(q.target.sl));
     const hint = document.createElement('div');
     hint.className = 'bv-sl-hint'; hint.textContent = 'Touche la bonne teinte ↓';
     display.appendChild(hint);
@@ -88,6 +90,16 @@ function barveRender() {
   }
 
   display.classList.remove('bv-anim'); void display.offsetWidth; display.classList.add('bv-anim');
+  if (typeof speak === 'function') speak(q.target.sl);
+}
+
+function bvSpeakBtn(word) {
+  const btn = document.createElement('button');
+  btn.className = 'game-speak-btn';
+  btn.textContent = '🔊';
+  btn.setAttribute('aria-label', 'Écouter la prononciation');
+  btn.addEventListener('click', e => { e.stopPropagation(); if (typeof speak === 'function') speak(word); });
+  return btn;
 }
 
 function bvOpts4(target) {

@@ -63,6 +63,13 @@
         <div class="gc-sub">35 aliments & boissons · timer · 3 vies</div>
       </div>
     </div>
+    <div class="game-card motsmeles" id="btn-motsmeles" role="button" tabindex="0" aria-label="Mots mêlés slovènes">
+      <div class="gc-em">🔠</div>
+      <div>
+        <div class="gc-title">Mots Mêlés</div>
+        <div class="gc-sub">Trouve les mots slovènes cachés · 3 min</div>
+      </div>
+    </div>
   </div>
 
   <!-- Nav -->
@@ -334,6 +341,7 @@
       <div class="tz-question-wrap">
         <div class="tz-q-label">Trouve en slovène :</div>
         <div id="tz-question" class="tz-question">Pomme</div>
+        <button class="game-speak-btn tz-speak-btn" id="tz-speak-btn" aria-label="Écouter en slovène">🔊</button>
       </div>
       <div id="tz-grid" class="tz-grid"></div>
     </div>
@@ -380,6 +388,35 @@
   </div>
 </div>
 
+<!-- ══════════ MOTS MÊLÉS ══════════ -->
+<div class="scr out" id="scr-motsmeles">
+  <div class="mm-wrap">
+    <div class="mm-header">
+      <button class="mille-quit-btn" id="mm-quit" aria-label="Quitter">✕ Quitter</button>
+      <div class="mm-hud">
+        <div class="mm-timer-track"><div id="mm-timer-bar" class="mm-timer-bar"></div></div>
+        <span id="mm-timer" class="mm-timer-val">3:00</span>
+        <span id="mm-found-count" class="mm-found-ct">0</span><span class="mm-found-lbl">/8</span>
+      </div>
+    </div>
+    <div id="mm-grid" class="mm-grid"></div>
+    <div class="mm-clues-wrap">
+      <div class="mm-clues-title">Cherche ces mots</div>
+      <div id="mm-clues" class="mm-clues-list"></div>
+    </div>
+    <div class="mille-ov" id="mm-ov">
+      <div class="mille-ov-card">
+        <div id="mm-ov-em"    class="mille-ov-em">🔤</div>
+        <div id="mm-ov-title" class="mille-ov-title">Grille complète !</div>
+        <div id="mm-ov-xp"   class="mille-ov-xp">+0 XP</div>
+        <div id="mm-ov-sub"  class="mille-ov-sub"></div>
+        <button class="res-btn" id="mm-again">Nouvelle grille 🔄</button>
+        <button class="res-btn" id="mm-home" style="margin-top:8px;background:linear-gradient(135deg,#1a3a7a,#003DA5)">Accueil</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- #app -->
 
 <!-- DATA -->
@@ -413,6 +450,7 @@
 <script src="js/millionnaire.js"></script>
 <script src="js/barve.js"></script>
 <script src="js/trznica.js"></script>
+<script src="js/motsmeles.js"></script>
 <script src="js/app.js"></script>
 
 </body>
