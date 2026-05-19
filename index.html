@@ -49,6 +49,20 @@
         <div class="gc-sub">Culture slovène · 12 questions · 4 jokers</div>
       </div>
     </div>
+    <div class="game-card barve" id="btn-barve" role="button" tabindex="0" aria-label="Jeu des couleurs slovènes">
+      <div class="gc-em">🎨</div>
+      <div>
+        <div class="gc-title">Barve — Les couleurs</div>
+        <div class="gc-sub">12 couleurs · 16 rounds · couleur ↔ mot</div>
+      </div>
+    </div>
+    <div class="game-card trznica" id="btn-trznica" role="button" tabindex="0" aria-label="Jeu du marché slovène">
+      <div class="gc-em">🛒</div>
+      <div>
+        <div class="gc-title">Tržnica — Le marché</div>
+        <div class="gc-sub">35 aliments & boissons · timer · 3 vies</div>
+      </div>
+    </div>
   </div>
 
   <!-- Nav -->
@@ -275,6 +289,67 @@
   </div>
 </div>
 
+<!-- ══════════ BARVE ══════════ -->
+<div class="scr out" id="scr-barve">
+  <div class="bv-wrap">
+    <div class="bv-header">
+      <button class="mille-quit-btn" id="bv-quit" aria-label="Quitter">✕ Quitter</button>
+      <div class="bv-header-info">
+        <div id="bv-counter" class="bv-counter">1 / 16</div>
+        <div id="bv-score"   class="bv-score">⭐ 0</div>
+      </div>
+    </div>
+    <div class="bv-prog-track"><div id="bv-prog" class="bv-prog-fill"></div></div>
+    <div class="bv-body">
+      <div id="bv-instr"   class="bv-instr">Comment dit-on en slovène ?</div>
+      <div id="bv-display" class="bv-display"></div>
+      <div id="bv-choices" class="bv-choices"></div>
+    </div>
+  </div>
+  <div class="mille-ov" id="bv-ov">
+    <div class="mille-ov-card">
+      <div id="bv-ov-em"    class="mille-ov-em">🎨</div>
+      <div id="bv-ov-title" class="mille-ov-title">Maître des barve !</div>
+      <div id="bv-ov-xp"   class="mille-ov-xp">+35 XP</div>
+      <div id="bv-ov-sub"  class="mille-ov-sub"></div>
+      <button class="res-btn" id="bv-again">Rejouer</button>
+      <button class="res-btn" id="bv-home" style="margin-top:8px;background:linear-gradient(135deg,#4c1d95,#7C3AED)">Accueil</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TRŽNICA ══════════ -->
+<div class="scr out" id="scr-trznica">
+  <div class="tz-wrap">
+    <div class="bv-header">
+      <button class="mille-quit-btn" id="tz-quit" aria-label="Quitter">✕ Quitter</button>
+      <div class="bv-header-info">
+        <div id="tz-round" class="bv-counter">1 / 20</div>
+        <div id="tz-lives" class="tz-lives">❤️❤️❤️</div>
+      </div>
+    </div>
+    <div class="bv-prog-track"><div id="tz-prog" class="bv-prog-fill"></div></div>
+    <div class="tz-timer-track"><div id="tz-timer-bar" class="tz-timer-fill"></div></div>
+    <div class="tz-body">
+      <div class="tz-question-wrap">
+        <div class="tz-q-label">Trouve en slovène :</div>
+        <div id="tz-question" class="tz-question">Pomme</div>
+      </div>
+      <div id="tz-grid" class="tz-grid"></div>
+    </div>
+  </div>
+  <div class="mille-ov" id="tz-ov">
+    <div class="mille-ov-card">
+      <div id="tz-ov-em"    class="mille-ov-em">🛒</div>
+      <div id="tz-ov-title" class="mille-ov-title">Courses terminées !</div>
+      <div id="tz-ov-xp"   class="mille-ov-xp">+50 XP</div>
+      <div id="tz-ov-sub"  class="mille-ov-sub"></div>
+      <button class="res-btn" id="tz-again">Rejouer</button>
+      <button class="res-btn" id="tz-home" style="margin-top:8px;background:linear-gradient(135deg,#14532d,#16A34A)">Accueil</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ MILLIONNAIRE ══════════ -->
 <div class="scr out" id="scr-mille">
   <div class="mille-wrap">
@@ -334,6 +409,10 @@
 <!-- APP LOGIC -->
 <script src="js/engine.js"></script>
 <script src="js/game.js"></script>
+<script src="js/crossword.js"></script>
+<script src="js/millionnaire.js"></script>
+<script src="js/barve.js"></script>
+<script src="js/trznica.js"></script>
 <script src="js/app.js"></script>
 
 </body>

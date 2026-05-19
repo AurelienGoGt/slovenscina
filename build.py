@@ -27,6 +27,8 @@ FILES_ORDER = [
     'js/game.js',
     'js/crossword.js',
     'js/millionnaire.js',
+    'js/barve.js',
+    'js/trznica.js',
     'js/app.js',
 ]
 

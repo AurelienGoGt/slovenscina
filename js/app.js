@@ -430,6 +430,20 @@ document.getElementById('mille-home').addEventListener('click', () => { milleSto
 document.getElementById('cw-level-btn').addEventListener('click', startCrossword);
 document.getElementById('cw-back').addEventListener('click', () => { cwStopMusic(); if (APP.lvId) openLevel(APP.lvId); else goHome(); });
 
+// Barve
+document.getElementById('btn-barve').addEventListener('click', startBarve);
+document.getElementById('btn-barve').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') startBarve(); });
+document.getElementById('bv-quit').addEventListener('click', () => { nav('scr-home', 'back'); setActiveNav('nav-home'); });
+document.getElementById('bv-again').addEventListener('click', startBarve);
+document.getElementById('bv-home').addEventListener('click', () => { nav('scr-home', 'back'); setActiveNav('nav-home'); });
+
+// Tržnica
+document.getElementById('btn-trznica').addEventListener('click', startTrznica);
+document.getElementById('btn-trznica').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') startTrznica(); });
+document.getElementById('tz-quit').addEventListener('click', () => { if (TZ.timer) clearInterval(TZ.timer); nav('scr-home', 'back'); setActiveNav('nav-home'); });
+document.getElementById('tz-again').addEventListener('click', startTrznica);
+document.getElementById('tz-home').addEventListener('click', () => { if (TZ.timer) clearInterval(TZ.timer); nav('scr-home', 'back'); setActiveNav('nav-home'); });
+
 // Volume popup
 document.getElementById('mille-vol-btn').addEventListener('click', toggleVolPopup);
 document.getElementById('cw-vol-btn').addEventListener('click', toggleVolPopup);

@@ -275,6 +275,10 @@ button:focus-visible{outline:2.5px solid var(--si-blue);outline-offset:2px;borde
 .game-card{display:flex;align-items:center;gap:14px;background:white;border-radius:16px;padding:14px 16px;box-shadow:0 2px 12px rgba(0,61,165,.08);cursor:pointer;transition:transform .15s,box-shadow .15s;border:1px solid rgba(0,61,165,.07);margin-bottom:10px}
 .game-card:active{transform:scale(.98)}
 .game-card:hover{transform:scale(1.01);box-shadow:0 4px 18px rgba(0,61,165,.12)}
+.game-card.barve{background:linear-gradient(135deg,#f3e8ff,#ede9fe);border-color:rgba(124,58,237,.15);animation:barve-glow 4s ease-in-out infinite}
+@keyframes barve-glow{0%,100%{box-shadow:0 2px 12px rgba(124,58,237,.07)}50%{box-shadow:0 6px 22px rgba(124,58,237,.2)}}
+.game-card.trznica{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:rgba(22,163,74,.15);animation:trznica-glow 4s ease-in-out infinite 1s}
+@keyframes trznica-glow{0%,100%{box-shadow:0 2px 12px rgba(22,163,74,.07)}50%{box-shadow:0 6px 22px rgba(22,163,74,.2)}}
 .gc-em{font-size:28px;flex-shrink:0}
 .gc-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
 .gc-sub{font-size:11.5px;color:var(--soft)}
@@ -397,3 +401,55 @@ button:focus-visible{outline:2.5px solid var(--si-blue);outline-offset:2px;borde
 
 /* ── Settings music vol ── */
 #music-vol{width:90px}
+
+/* ══════════════════════════════════
+   BARVE — Jeu des couleurs
+══════════════════════════════════ */
+.bv-wrap{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,#1e1035,#2d1b6e)}
+.bv-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;flex-shrink:0}
+.bv-header-info{display:flex;gap:14px;align-items:center}
+.bv-counter{font-size:12px;color:rgba(255,255,255,.5)}
+.bv-score{font-size:13px;font-weight:700;color:var(--gold)}
+.bv-prog-track{height:3px;background:rgba(255,255,255,.1);flex-shrink:0}
+.bv-prog-fill{height:100%;background:linear-gradient(90deg,#7C3AED,var(--gold));transition:width .3s ease}
+.bv-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 16px 20px;gap:14px;overflow:hidden}
+.bv-instr{font-size:13.5px;color:rgba(255,255,255,.55);font-weight:500;text-align:center}
+.bv-display{display:flex;flex-direction:column;align-items:center;gap:12px;flex:1;justify-content:center;min-height:0}
+.bv-display.bv-anim{animation:bv-appear .28s ease-out}
+@keyframes bv-appear{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+.bv-circle{width:110px;height:110px;border-radius:50%;box-shadow:0 10px 32px rgba(0,0,0,.45)}
+.bv-circle-light{box-shadow:0 10px 32px rgba(0,0,0,.18),inset 0 0 0 2px rgba(0,0,0,.12)}
+.bv-fr-lbl{font-size:24px;font-weight:700;color:white}
+.bv-sl-word{font-family:'Lora',serif;font-size:32px;font-weight:700;color:white;text-align:center}
+.bv-sl-hint{font-size:12px;color:rgba(255,255,255,.38);text-align:center}
+.bv-choices{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:9px;flex-shrink:0}
+.bv-word-btn{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.18);border-radius:13px;color:white;font-size:15px;font-weight:600;padding:15px 8px;cursor:pointer;font-family:inherit;transition:background .15s}
+.bv-word-btn:active:not(:disabled){background:rgba(255,255,255,.2)}
+.bv-word-btn.bv-correct{background:rgba(82,183,136,.3);border-color:#52b788;animation:correct-pop .45s cubic-bezier(.34,1.56,.64,1)}
+.bv-word-btn.bv-wrong{background:rgba(226,75,74,.25);border-color:#e24b4a;animation:wrong-shake .42s ease}
+.bv-swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:4px}
+.bv-swatch{width:72px;height:72px;border-radius:16px;cursor:pointer;transition:transform .12s;box-shadow:0 5px 16px rgba(0,0,0,.38)}
+.bv-swatch:active{transform:scale(.9)}
+.bv-swatch-light{box-shadow:0 5px 16px rgba(0,0,0,.12),inset 0 0 0 2px rgba(0,0,0,.1)}
+.bv-sw-correct{outline:3px solid #52b788;outline-offset:2px;transform:scale(1.12) !important}
+.bv-sw-wrong{outline:3px solid #e24b4a;outline-offset:2px;animation:wrong-shake .42s ease}
+
+/* ══════════════════════════════════
+   TRŽNICA — Le marché
+══════════════════════════════════ */
+.tz-wrap{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,#0d2010,#14451e)}
+.tz-timer-track{height:4px;background:rgba(255,255,255,.1);flex-shrink:0}
+.tz-timer-fill{height:100%;background:#52b788;transition:width 1s linear}
+.tz-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:14px 12px 16px;gap:12px;overflow:hidden}
+.tz-question-wrap{text-align:center;flex-shrink:0}
+.tz-q-label{font-size:10.5px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:5px}
+.tz-question{font-family:'Lora',serif;font-size:28px;font-weight:700;color:white;line-height:1.2}
+.tz-question.tz-q-anim{animation:q-slide .28s ease-out}
+.tz-lives{font-size:16px;letter-spacing:3px}
+.tz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;flex:1;align-content:start}
+.tz-item{display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 4px 10px;cursor:pointer;font-family:inherit;transition:background .15s;min-height:80px;justify-content:center}
+.tz-item:active:not(:disabled){background:rgba(255,255,255,.18)}
+.tz-em{font-size:32px;line-height:1}
+.tz-item-lbl{font-size:11px;font-weight:600;color:rgba(255,255,255,.65);text-align:center;line-height:1.2}
+.tz-item.tz-correct{background:rgba(82,183,136,.3);border-color:#52b788;animation:correct-pop .45s cubic-bezier(.34,1.56,.64,1)}
+.tz-item.tz-wrong{background:rgba(226,75,74,.25);border-color:#e24b4a;animation:wrong-shake .42s ease}
