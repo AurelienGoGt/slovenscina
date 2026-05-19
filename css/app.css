@@ -272,13 +272,13 @@ button:focus-visible{outline:2.5px solid var(--si-blue);outline-offset:2px;borde
 /* ═══ GAME CARDS (home) — icône grid ═══ */
 .games-section{padding:0 14px 14px}
 .games-title{font-size:11px;font-weight:700;color:var(--soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.game-card{display:flex;flex-direction:column;align-items:center;gap:6px;background:white;border-radius:18px;padding:18px 10px 14px;box-shadow:0 2px 12px rgba(0,61,165,.08);cursor:pointer;transition:transform .15s,box-shadow .15s;border:1px solid rgba(0,61,165,.07);text-align:center}
+.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.game-card{display:flex;flex-direction:column;align-items:center;gap:4px;background:white;border-radius:14px;padding:10px 8px 9px;box-shadow:0 2px 8px rgba(0,61,165,.07);cursor:pointer;transition:transform .15s,box-shadow .15s;border:1px solid rgba(0,61,165,.07);text-align:center}
 .game-card:active{transform:scale(.95)}
-.game-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,61,165,.13)}
-.gc-em{font-size:36px;line-height:1;margin-bottom:2px}
-.gc-title{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.2}
-.gc-sub{font-size:10px;color:var(--soft);line-height:1.3}
+.game-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,61,165,.12)}
+.gc-em{font-size:26px;line-height:1;margin-bottom:1px}
+.gc-title{font-size:11.5px;font-weight:700;color:var(--ink);line-height:1.2}
+.gc-sub{font-size:9.5px;color:var(--soft);line-height:1.3}
 .game-card.mille{background:linear-gradient(160deg,#0a1a38,#0d2256)}
 .game-card.mille .gc-title{color:white}
 .game-card.mille .gc-sub{color:rgba(255,255,255,.5)}
