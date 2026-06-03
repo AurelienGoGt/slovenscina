@@ -3,19 +3,15 @@
 Build script — génère slovenscina_bundle.html (tout inline, pour mobile)
 Usage: python3 build.py
 """
-import os, subprocess, sys
+import os, glob, subprocess, sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 
-# Ordre de chargement — les leçons individuelles d'abord
-SL_LESSON_FILES = [f'data/sl/lesson_{i:02d}_{name}.js' for i, name in [
-    (1,'salutations'),(2,'alphabet_1'),(3,'alphabet_2'),(4,'alphabet_3'),
-    (5,'chiffres_1_10'),(6,'nombres_11_100'),(7,'nombres_prix'),
-    (8,'couleurs'),(9,'adjectifs'),(10,'decrire'),
-    (11,'famille_proche'),(12,'famille_elargie'),(13,'jours_mois'),
-    (14,'meteo'),(15,'heure'),(16,'se_presenter'),
-    (17,'quotidien'),(18,'maison'),(19,'courses'),(20,'en_ville'),
-]]
+# Découverte automatique de toutes les leçons (lesson_NN_*.js, triées par numéro)
+_pattern = os.path.join(BASE, 'data', 'sl', 'lesson_*.js')
+SL_LESSON_FILES = sorted(
+    os.path.relpath(f, BASE) for f in glob.glob(_pattern)
+)
 
 
 FILES_ORDER = [

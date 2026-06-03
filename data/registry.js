@@ -68,9 +68,10 @@ function getLevels() {
 
 // ═══════════════════════════════════════════
 // EX — registre global des exercices
+// Mis à jour automatiquement par generate_lesson.py
 // ═══════════════════════════════════════════
 const EX = {
-  // Slovenian exercises
+  // ── Niveau 1 ──
   '1-1':  EX_1_1,
   '1-2':  EX_1_2,
   '1-3':  EX_1_3,
@@ -91,5 +92,8 @@ const EX = {
   '1-18': EX_1_18,
   '1-19': EX_1_19,
   '1-20': EX_1_20,
+  // ── Niveau 2 (généré automatiquement) ──
+  // ── Niveau 3 (généré automatiquement) ──
+  // ── Niveau 4 (généré automatiquement) ──
   ...EX_N1_RECAPS,
 };

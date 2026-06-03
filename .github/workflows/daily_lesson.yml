@@ -1,0 +1,74 @@
+name: Daily Lesson Generator
+
+# Génère une nouvelle leçon slovène chaque jour à 7h UTC
+# et déploie automatiquement via le workflow deploy.yml.
+#
+# Utilise GitHub Models (GPT-4o-mini) via GITHUB_TOKEN natif — aucune clé externe requise.
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # 7h UTC chaque jour
+  workflow_dispatch:      # déclenchement manuel possible
+    inputs:
+      lesson_id:
+        description: 'ID de leçon spécifique (ex: 2-1). Vide = prochaine manquante.'
+        required: false
+        default: ''
+
+permissions:
+  contents: write  # pour committer le nouveau fichier
+  models: read     # pour accéder à GitHub Models (GPT-4o-mini)
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Setup Node.js (pour node --check)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Pas de dépendances externes — urllib est dans la stdlib Python
+
+      - name: Generate lesson
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "${{ github.event.inputs.lesson_id }}" ]; then
+            python3 generate_lesson.py --lesson "${{ github.event.inputs.lesson_id }}"
+          else
+            python3 generate_lesson.py
+          fi
+
+      - name: Build bundle
+        run: python3 build.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "Lesson Bot 🎓"
+          git config user.email "lessons@slovenscina.app"
+          git add data/sl/ data/registry.js
+          if git diff --cached --quiet; then
+            echo "Aucune nouvelle leçon générée (toutes déjà présentes ?)"
+          else
+            DATE=$(date +%Y-%m-%d)
+            LESSON_FILE=$(git diff --cached --name-only | grep 'lesson_' | head -1)
+            MSG="🎓 Nouvelle leçon — ${DATE}"
+            if [ -n "$LESSON_FILE" ]; then
+              LESSON_NAME=$(basename "$LESSON_FILE" .js | sed 's/lesson_[0-9]*_//' | tr '_' ' ')
+              MSG="🎓 Leçon : ${LESSON_NAME} — ${DATE}"
+            fi
+            git commit -m "$MSG"
+            git push
+          fi
