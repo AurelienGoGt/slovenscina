@@ -20,7 +20,7 @@ function startLesson(les) {
   } else {
     LS_STATE.exercises = exData;
   }
-  LS_STATE.idx = 0; LS_STATE.hearts = 5; LS_STATE.answered = false; LS_STATE.selected = null;
+  LS_STATE.idx = 0; LS_STATE.hearts = 7; LS_STATE.answered = false; LS_STATE.selected = null;
   LS_STATE.totalEx = LS_STATE.exercises.length; LS_STATE.correctCount = 0;
   LS_STATE.matchLeft = null; LS_STATE.matchPairs = []; LS_STATE.matchFr = []; LS_STATE.matchDone = [];
   LS_STATE.reconPlaced = []; LS_STATE.wsFound = []; LS_STATE.wsSelCells = [];
@@ -608,7 +608,7 @@ function showFB(ok, msg, ans) {
   body.append(m, a); bar.append(icon, body);
 }
 function hideFB() { document.getElementById('fb-bar').className = 'fb-bar hide'; }
-function updateHearts() { document.getElementById('hearts').innerHTML = [0,1,2,3,4].map(i => i < LS_STATE.hearts ? '❤️' : '🖤').join(''); }
+function updateHearts() { document.getElementById('hearts').innerHTML = [0,1,2,3,4,5,6].map(i => i < LS_STATE.hearts ? '🏔️' : '<span style="opacity:.2">🏔️</span>').join(''); }
 
 function showResult() {
   const prog = LS.prog; const st = LS.stats;
@@ -619,7 +619,7 @@ function showResult() {
   prog[APP.lessonId] = { date: new Date().toISOString(), xp }; LS.saveP(prog);
   const gradedEx = LS_STATE.exercises.filter(e => !['presentation', 'tts_repeat', 'recap_intro', 'story'].includes(e.type));
   const acc = gradedEx.length > 0 ? Math.round((LS_STATE.correctCount / gradedEx.length) * 100) : 100;
-  document.getElementById('res-em').textContent = LS_STATE.hearts === 3 ? '🏆' : LS_STATE.hearts >= 1 ? '⭐' : '💪';
+  document.getElementById('res-em').textContent = LS_STATE.hearts === 7 ? '🏆' : LS_STATE.hearts >= 3 ? '⭐' : '💪';
   document.getElementById('res-title').textContent = 'Leçon terminée !';
   document.getElementById('res-sub').textContent = acc === 100 ? 'Parfait !' : acc >= 70 ? 'Bien joué !' : 'Continue !';
   document.getElementById('rs-xp').textContent = xp;

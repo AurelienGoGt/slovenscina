@@ -170,26 +170,102 @@ function milleXP(n) {
   return String(n);
 }
 
-// ── Musique réelle — Zdravljica (hymne slovène), domaine public, Wikimedia Commons ──
-const MILLE_MUSIC_URL = 'https://upload.wikimedia.org/wikipedia/commons/d/de/Zdravljica.ogg';
-
+// ── Musique tension game show (Web Audio — ambiance WWTBM, pulsations sombres) ──
 function milleStartMusic() {
   milleStopMusic();
   try {
-    const audio = new Audio(MILLE_MUSIC_URL);
-    audio.loop = true;
-    audio.volume = typeof getVol === 'function' ? getVol() : 0.75;
-    audio.play().catch(() => {});
-    _milleAudio = audio;
-    // Compatibilité avec le slider de volume (app.js utilise _milleGain.gain.value)
-    window._milleGain = { gain: { set value(v) { if (_milleAudio) _milleAudio.volume = v; } } };
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    let active = true;
+
+    const master = ctx.createGain();
+    master.gain.value = typeof getVol === 'function' ? getVol() : 0.75;
+    master.connect(ctx.destination);
+    window._milleGain = master;
+
+    // Reverb via delay feedback
+    const revDelay = ctx.createDelay(2); revDelay.delayTime.value = 0.35;
+    const revGain  = ctx.createGain();   revGain.gain.value = 0.18;
+    revDelay.connect(revGain); revGain.connect(revDelay); revGain.connect(master);
+
+    const BPM = 58, B = 60 / BPM;
+
+    // Pad sombre (nappes de tension)
+    function pad(freq, t, dur, vol) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      const flt = ctx.createBiquadFilter();
+      o.type = 'sine'; o.frequency.value = freq;
+      flt.type = 'lowpass'; flt.frequency.value = 500;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(vol, t + 0.6);
+      g.gain.setValueAtTime(vol, t + dur - 0.5);
+      g.gain.linearRampToValueAtTime(0, t + dur);
+      o.connect(flt); flt.connect(g); g.connect(master); g.connect(revDelay);
+      o.start(t); o.stop(t + dur);
+    }
+
+    // Pulse grave (kick synthétique)
+    function kick(t) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(80, t);
+      o.frequency.exponentialRampToValueAtTime(30, t + 0.18);
+      g.gain.setValueAtTime(0.7, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t + 0.28);
+    }
+
+    // Tic d'horloge (hi-hat métallique)
+    function tick(t, vol) {
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+      const src = ctx.createBufferSource(), g = ctx.createGain();
+      const flt = ctx.createBiquadFilter();
+      flt.type = 'highpass'; flt.frequency.value = 6000;
+      src.buffer = buf;
+      g.gain.value = vol * 0.4;
+      src.connect(flt); flt.connect(g); g.connect(master);
+      src.start(t);
+    }
+
+    // Accords tension en La mineur / Mi / Sol
+    const chords = [
+      [110, 138.6, 165],   // Am
+      [110, 138.6, 165],
+      [82.4, 110, 123.5],  // E (tension)
+      [82.4, 110, 130.8],  // Em
+      [98,  123.5, 146.8], // G
+      [98,  123.5, 146.8],
+      [110, 138.6, 165],   // Am
+      [110, 130.8, 164.8], // résolution sombre
+    ];
+
+    function loop() {
+      if (!active) return;
+      const t0 = ctx.currentTime + 0.05;
+      const barLen = B * 4;
+
+      chords.forEach((freqs, bar) => {
+        const t = t0 + bar * barLen;
+        freqs.forEach(f => pad(f, t, barLen * 0.95, 0.12));
+        // Kick sur les temps 1 et 3
+        kick(t); kick(t + barLen / 2);
+        // Tics d'horloge à chaque noire
+        for (let i = 0; i < 4; i++) tick(t + i * B, i === 0 ? 1 : 0.6);
+        // Sous-tic (syncope légère)
+        tick(t + B * 1.5, 0.35); tick(t + B * 2.5, 0.35);
+      });
+
+      const totalDur = chords.length * barLen * 1000;
+      setTimeout(() => { if (active) loop(); }, totalDur - 80);
+    }
+
+    loop();
+    _milleAudio = { stop() { active = false; window._milleGain = null; try { ctx.close(); } catch {} } };
   } catch {}
 }
 
 function milleStopMusic() {
-  if (_milleAudio) {
-    try { _milleAudio.pause(); _milleAudio.src = ''; } catch {}
-    _milleAudio = null;
-    window._milleGain = null;
-  }
+  if (_milleAudio) { _milleAudio.stop(); _milleAudio = null; }
 }
