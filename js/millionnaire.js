@@ -170,95 +170,26 @@ function milleXP(n) {
   return String(n);
 }
 
-// ── Game show music (Web Audio — violin, Slovenian folk dance, D major, 132 BPM) ──
+// ── Musique réelle — Zdravljica (hymne slovène), domaine public, Wikimedia Commons ──
+const MILLE_MUSIC_URL = 'https://upload.wikimedia.org/wikipedia/commons/d/de/Zdravljica.ogg';
+
 function milleStartMusic() {
   milleStopMusic();
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    let active = true;
-
-    const cmp = ctx.createDynamicsCompressor();
-    cmp.threshold.value = -16; cmp.ratio.value = 4;
-    cmp.connect(ctx.destination);
-
-    const masterVol = ctx.createGain();
-    masterVol.gain.value = typeof getVol === 'function' ? getVol() : 0.75;
-    masterVol.connect(cmp);
-    window._milleGain = masterVol;
-
-    const dry = ctx.createGain(); dry.gain.value = 0.52; dry.connect(masterVol);
-    const revD = ctx.createDelay(0.6); revD.delayTime.value = 0.11;
-    const revF = ctx.createGain(); revF.gain.value = 0.15;
-    const revO = ctx.createGain(); revO.gain.value = 0.20;
-    revD.connect(revF); revF.connect(revD);
-    revD.connect(revO); revO.connect(masterVol);
-
-    const BPM = 132, B = 60 / BPM;
-
-    function vln(freq, t, dur, vol) {
-      const o1 = ctx.createOscillator(), o2 = ctx.createOscillator();
-      const flt = ctx.createBiquadFilter();
-      const g   = ctx.createGain();
-      const lfo = ctx.createOscillator(), lg = ctx.createGain();
-      o1.type = 'sawtooth'; o1.frequency.value = freq;
-      o2.type = 'sawtooth'; o2.frequency.value = freq * 1.0028;
-      flt.type = 'lowpass'; flt.frequency.value = 2400; flt.Q.value = 0.7;
-      lfo.type = 'sine'; lfo.frequency.value = 5.8;
-      lg.gain.setValueAtTime(0, t);
-      lg.gain.linearRampToValueAtTime(0, t + 0.15);
-      lg.gain.linearRampToValueAtTime(freq * 0.012, t + 0.30);
-      lfo.connect(lg); lg.connect(o1.frequency); lg.connect(o2.frequency);
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(vol * 0.38, t + 0.055);
-      g.gain.linearRampToValueAtTime(vol, t + 0.11);
-      g.gain.setValueAtTime(vol, Math.max(t + 0.12, t + dur - 0.06));
-      g.gain.linearRampToValueAtTime(0.001, t + dur);
-      o1.connect(flt); o2.connect(flt); flt.connect(g);
-      g.connect(dry); g.connect(revD);
-      lfo.start(t); lfo.stop(t + dur + 0.12);
-      o1.start(t); o1.stop(t + dur + 0.05);
-      o2.start(t); o2.stop(t + dur + 0.05);
-    }
-
-    function bass(freq, t) {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.type = 'sawtooth'; o.frequency.value = freq;
-      g.gain.setValueAtTime(0.38, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.36);
-      o.connect(g); g.connect(dry);
-      o.start(t); o.stop(t + 0.40);
-    }
-
-    // D4=293.7 E4=329.6 F#4=369.9 G4=392 A4=440 B4=493.9 C#5=554.4 D5=587.3
-    const mel = [
-      [293.7,1],[329.6,1],[369.9,1],[440,1],
-      [392,1],[369.9,1],[329.6,2],
-      [440,1],[440,1],[440,1],[493.9,1],
-      [440,1],[392,1],[369.9,2],
-      [293.7,1],[369.9,1],[440,1],[587.3,1],
-      [554.4,1],[493.9,1],[440,2],
-      [369.9,1],[392,1],[440,1],[369.9,1],
-      [329.6,1],[369.9,1],[293.7,2],
-    ];
-    const totalBeats = mel.reduce((s,[,b])=>s+b, 0); // 32
-
-    // Bass: D2=73.4Hz A2=110Hz — follows phrase harmony
-    const bassFreqs = [73.4,73.4,73.4,73.4, 110,110,110,110, 73.4,73.4,110,110, 73.4,73.4,73.4,73.4];
-
-    function loop() {
-      if (!active) return;
-      const t0 = ctx.currentTime + 0.04;
-      let t = t0;
-      mel.forEach(([f, beats]) => { vln(f, t, beats * B * 0.87, 0.44); t += beats * B; });
-      for (let i = 0; i < 16; i++) bass(bassFreqs[i], t0 + i * 2 * B);
-      setTimeout(() => { if (active) loop(); }, Math.round(totalBeats * B * 1000) - 60);
-    }
-
-    loop();
-    _milleAudio = { stop() { active = false; window._milleGain = null; try { ctx.close(); } catch {} } };
+    const audio = new Audio(MILLE_MUSIC_URL);
+    audio.loop = true;
+    audio.volume = typeof getVol === 'function' ? getVol() : 0.75;
+    audio.play().catch(() => {});
+    _milleAudio = audio;
+    // Compatibilité avec le slider de volume (app.js utilise _milleGain.gain.value)
+    window._milleGain = { gain: { set value(v) { if (_milleAudio) _milleAudio.volume = v; } } };
   } catch {}
 }
 
 function milleStopMusic() {
-  if (_milleAudio) { _milleAudio.stop(); _milleAudio = null; }
+  if (_milleAudio) {
+    try { _milleAudio.pause(); _milleAudio.src = ''; } catch {}
+    _milleAudio = null;
+    window._milleGain = null;
+  }
 }

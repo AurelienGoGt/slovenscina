@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════
 // TRŽNICA — Le marché slovène
 // Vois le mot français → retrouve l'emoji/nom slovène
-// 20 rounds · timer 9s · 3 vies · 50 XP
+// 20 rounds · timer 9s · 7 vies 🏔️ · 50 XP
 // ═══════════════════════════════════════════
 
 const TZ_ITEMS = [
@@ -51,7 +51,8 @@ const TZ_ROUNDS = 20;
 const TZ_TIME   = 9;
 const TZ_XP     = 50;
 
-const TZ = { round:0, score:0, lives:3, qs:[], timer:null, timeLeft:0, answered:false };
+const TZ_MAX_LIVES = 7;
+const TZ = { round:0, score:0, lives:TZ_MAX_LIVES, qs:[], timer:null, timeLeft:0, answered:false };
 
 function startTrznica() {
   const pool = [...TZ_ITEMS].sort(() => Math.random() - .5).slice(0, TZ_ROUNDS);
@@ -59,7 +60,7 @@ function startTrznica() {
     const others = TZ_ITEMS.filter(i => i.sl !== item.sl).sort(() => Math.random() - .5).slice(0, 5);
     return { target:item, opts:[item, ...others].sort(() => Math.random() - .5) };
   });
-  TZ.round = 0; TZ.score = 0; TZ.lives = 3; TZ.answered = false;
+  TZ.round = 0; TZ.score = 0; TZ.lives = TZ_MAX_LIVES; TZ.answered = false;
   nav('scr-trznica', 'fwd');
   trznicaRender();
 }
@@ -110,7 +111,7 @@ function trznicaTimer() {
 
 function trznicaHearts() {
   document.getElementById('tz-lives').innerHTML =
-    '❤️'.repeat(TZ.lives) + '🖤'.repeat(3 - TZ.lives);
+    '🏔️'.repeat(TZ.lives) + '<span style="opacity:.2">🏔️</span>'.repeat(TZ_MAX_LIVES - TZ.lives);
 }
 
 function tzAnswer(btn, correct) {
