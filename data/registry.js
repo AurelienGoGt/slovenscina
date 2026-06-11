@@ -59,6 +59,7 @@ const LEVELS_SL = [
       { id:'4-rf', title:'Grand récap final',       sub:'Bilan Niveau 4 complet',          xp:100,words:0,  type:'recap'  },
     ]
   },
+  NIVEAU5,
 ];
 
 // Dynamic LEVELS based on language preference
@@ -93,7 +94,20 @@ const EX = {
   '1-19': EX_1_19,
   '1-20': EX_1_20,
   // ── Niveau 2 (généré automatiquement) ──
+  '2-1':  EX_2_1,
+  '2-2':  EX_2_2,
+  '2-3':  EX_2_3,
+  '2-4':  EX_2_4,
   // ── Niveau 3 (généré automatiquement) ──
   // ── Niveau 4 (généré automatiquement) ──
+  // ── Niveau 5 — Culture & Histoire (manuel) ──
+  'C-1': EX_C_1,
+  'C-2': EX_C_2,
+  'C-3': EX_C_3,
+  'C-4': EX_C_4,
+  'C-5': EX_C_5,
+  'C-6': EX_C_6,
+  'C-7': EX_C_7,
+  'C-8': EX_C_8,
   ...EX_N1_RECAPS,
 };

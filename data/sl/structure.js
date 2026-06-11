@@ -156,3 +156,21 @@ const EX_N1_RECAPS = {
 ],
 
 };
+
+// ═══════════════════════════════════════════
+// NIVEAU 5 — CULTURE & HISTOIRE (8 leçons)
+// ═══════════════════════════════════════════
+const NIVEAU5 = {
+  id: 5, name: 'Culture & Histoire', sub: 'Slovénie : histoire, gastronomie, identité', emoji: '🏛️',
+  lessons: [
+    { id:'C-1', title:'Les origines de la Slovénie',  sub:"Celtes, Romains, Slaves — jusqu'au 9e siècle",  xp:70, words:18, type:'lesson' },
+    { id:'C-2', title:'Habsbourg & réveil national',  sub:"1282-1918 : de l'Empire à l'émancipation",      xp:70, words:18, type:'lesson' },
+    { id:'C-3', title:'Indépendance & Europe',        sub:'Yougoslavie, 1991, UE 2004, euro 2007',                  xp:70, words:18, type:'lesson' },
+    { id:'C-4', title:'La gastronomie slovène',       sub:'Potica, jota, kranjska klobasa, bučno olje…',  xp:65, words:20, type:'lesson' },
+    { id:'C-5', title:'Géographie & régions',         sub:'Triglav, Karst, Soča, Bled, les 7 régions',    xp:65, words:18, type:'lesson' },
+    { id:'C-6', title:'Personnalités slovènes',       sub:'Prešeren, Plečnik, Cankar, Trubar…',       xp:65, words:18, type:'lesson' },
+    { id:'C-7', title:'Traditions & fêtes',           sub:'Kurent, Kres, Martinovanje, fêtes nationales',      xp:65, words:18, type:'lesson' },
+    { id:'C-8', title:'Nationalité & identité',       sub:'Od kod ste ? Sem Slovenec/Slovenka. Pays & peuples',     xp:75, words:22, type:'lesson' },
+    { id:'C-rf',title:'Grand quiz Culture',           sub:'Bilan complet — histoire, culture, identité',  xp:100,words:0,  type:'recap'  },
+  ]
+};

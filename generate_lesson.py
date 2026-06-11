@@ -699,31 +699,44 @@ def update_registry(lesson_id, var_name):
         print(f'  registry.js : {lesson_id} déjà enregistré.')
         return
 
-    # Chercher le dernier "X-Y": EX_... pour insérer après
-    # On cherche la ligne '1-20': EX_1_20 ou la dernière leçon enregistrée
-    # puis on insère avant la ligne ...EX_N1_RECAPS ou avant la fermeture };
-    marker = "  ...EX_N1_RECAPS,"
+    level_prefix = lesson_id.split('-')[0]  # '2', '3', '4'
     new_line = f"  '{lesson_id}': {var_name},"
-    if marker in content:
-        # Insérer juste avant ...EX_N1_RECAPS
-        # Mais pour N2+, insérer après la dernière leçon N2 enregistrée
-        # Cherche la dernière entrée Nx-xx déjà présente
-        lines = content.split('\n')
-        insert_idx = None
+
+    lines = content.split('\n')
+    insert_idx = None
+
+    # Chercher la dernière entrée du même niveau pour insérer juste après
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith(f"'{level_prefix}-") and ':' in stripped:
+            insert_idx = i
+
+    if insert_idx is not None:
+        lines.insert(insert_idx + 1, new_line)
+    else:
+        # Chercher le commentaire de section du niveau et insérer juste après
+        section_comment = f'// ── Niveau {level_prefix}'
         for i, line in enumerate(lines):
-            if line.strip().startswith(f"'{lesson_id[0]}-"):
-                insert_idx = i  # après cette ligne
+            if section_comment in line:
+                insert_idx = i
+                break
         if insert_idx is not None:
             lines.insert(insert_idx + 1, new_line)
         else:
-            # Insérer avant ...EX_N1_RECAPS
-            idx = next(i for i, l in enumerate(lines) if marker in l)
-            lines.insert(idx, new_line)
-        content = '\n'.join(lines)
-    else:
-        # Insérer avant la fermeture de l'objet EX
-        content = content.replace('};', f'  {new_line}\n}};', 1)
+            # Dernier recours : insérer avant ...EX_N1_RECAPS
+            marker = '  ...EX_N1_RECAPS,'
+            for i, line in enumerate(lines):
+                if marker in line:
+                    lines.insert(i, new_line)
+                    break
+            else:
+                # Insérer avant la fermeture de l'objet EX
+                for i in range(len(lines) - 1, -1, -1):
+                    if lines[i].strip() == '};':
+                        lines.insert(i, new_line)
+                        break
 
+    content = '\n'.join(lines)
     with open(reg_path, 'w', encoding='utf-8') as f:
         f.write(content)
     print(f'  ✓ registry.js mis à jour ({lesson_id}: {var_name})')
