@@ -98,7 +98,15 @@ const EX = {
   '2-2':  EX_2_2,
   '2-3':  EX_2_3,
   '2-4':  EX_2_4,
+  '2-5':  EX_2_5,
+  '2-6':  EX_2_6,
+  '2-7':  EX_2_7,
+  '2-8':  EX_2_8,
+  '2-9':  EX_2_9,
+  '2-10': EX_2_10,
   // ── Niveau 3 (généré automatiquement) ──
+  '3-1':  EX_3_1,
+  '3-2':  EX_3_2,
   // ── Niveau 4 (généré automatiquement) ──
   // ── Niveau 5 — Culture & Histoire (manuel) ──
   'C-1': EX_C_1,

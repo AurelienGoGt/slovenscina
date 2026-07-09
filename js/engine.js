@@ -615,16 +615,31 @@ function showResult() {
   const lv = getLevels().find(l => l.id === APP.lvId);
   const les = lv?.lessons.find(l => l.id === APP.lessonId);
   const xp = les?.xp || 50; const words = les?.words || 0;
-  st.xp += xp; st.lessons += 1; st.words += words; LS.saveS(st);
-  prog[APP.lessonId] = { date: new Date().toISOString(), xp }; LS.saveP(prog);
   const gradedEx = LS_STATE.exercises.filter(e => !['presentation', 'tts_repeat', 'recap_intro', 'story'].includes(e.type));
   const acc = gradedEx.length > 0 ? Math.round((LS_STATE.correctCount / gradedEx.length) * 100) : 100;
-  document.getElementById('res-em').textContent = LS_STATE.hearts === 7 ? '🏆' : LS_STATE.hearts >= 3 ? '⭐' : '💪';
-  document.getElementById('res-title').textContent = 'Leçon terminée !';
-  document.getElementById('res-sub').textContent = acc === 100 ? 'Parfait !' : acc >= 70 ? 'Bien joué !' : 'Continue !';
-  document.getElementById('rs-xp').textContent = xp;
+  const passed = LS_STATE.hearts > 0;
+
+  if (passed) {
+    st.xp += xp; st.lessons += 1; st.words += words; LS.saveS(st);
+    prog[APP.lessonId] = { date: new Date().toISOString(), xp }; LS.saveP(prog);
+  }
+
+  document.getElementById('res-em').textContent = !passed ? '💔' : LS_STATE.hearts === 7 ? '🏆' : LS_STATE.hearts >= 3 ? '⭐' : '💪';
+  document.getElementById('res-title').textContent = passed ? 'Leçon terminée !' : 'Essaie encore !';
+  document.getElementById('res-sub').textContent = passed ? (acc === 100 ? 'Parfait !' : acc >= 70 ? 'Bien joué !' : 'Continue !') : 'Recommence pour débloquer la suite.';
+  document.getElementById('rs-xp').textContent = passed ? xp : 0;
   document.getElementById('rs-acc').textContent = (isNaN(acc) ? 100 : acc) + '%';
-  document.getElementById('rs-wds').textContent = words;
+  document.getElementById('rs-wds').textContent = passed ? words : 0;
+
+  const primaryBtn = document.querySelector('#res-ov .res-btn');
+  if (!passed) {
+    primaryBtn.textContent = '🔄 Recommencer';
+    primaryBtn.onclick = () => { document.getElementById('res-ov').classList.remove('show'); startLesson(les); };
+  } else {
+    primaryBtn.textContent = '🎮 Jouer au Speed Game !';
+    primaryBtn.onclick = finishLesson;
+  }
+
   document.getElementById('res-ov').classList.add('show');
 }
 
