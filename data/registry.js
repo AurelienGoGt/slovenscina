@@ -60,6 +60,7 @@ const LEVELS_SL = [
     ]
   },
   NIVEAU5,
+  NIVEAU6,
 ];
 
 // Dynamic LEVELS based on language preference
@@ -122,6 +123,7 @@ const EX = {
   '4-6':  EX_4_6,
   '4-7':  EX_4_7,
   '4-8':  EX_4_8,
+  // ── Niveau 6 (généré automatiquement) ──
   // ── Niveau 5 — Culture & Histoire (manuel) ──
   'C-1': EX_C_1,
   'C-2': EX_C_2,

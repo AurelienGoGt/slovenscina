@@ -158,6 +158,27 @@ const EX_N1_RECAPS = {
 };
 
 // ═══════════════════════════════════════════
+// NIVEAU 6 — PERFECTIONNEMENT (8 leçons)
+// ═══════════════════════════════════════════
+const NIVEAU6 = {
+  id: 6, name: 'Perfectionnement', sub: 'Sport, politique, médias, expressions avancées', emoji: '🎯',
+  lessons: [
+    { id:'6-1', title:'Le sport slovène',          sub:'Ski, cyclisme, basket, outdoor',              xp:75, words:22, type:'lesson' },
+    { id:'6-2', title:'Nature & outdoor avancé',   sub:'Randonnée, escalade, Triglav, refuges',       xp:75, words:20, type:'lesson' },
+    { id:'6-r1',title:'Récap 1 & 2',               sub:'Sport + nature outdoor',                       xp:30, words:0,  type:'recap'  },
+    { id:'6-3', title:'Politique & société',        sub:'Gouvernement, parlement, élections',          xp:80, words:24, type:'lesson' },
+    { id:'6-4', title:'Médias & actualités',        sub:'Comprendre un article, commenter',            xp:80, words:22, type:'lesson' },
+    { id:'6-r2',title:'Récap 3 & 4',               sub:'Politique + médias',                          xp:30, words:0,  type:'recap'  },
+    { id:'6-5', title:'Expressions idiomatiques',   sub:'Proverbes, argot, familier',                  xp:75, words:24, type:'lesson' },
+    { id:'6-6', title:'Gastronomie avancée',        sub:'Vins slovènes, bières, recettes régionales',  xp:75, words:22, type:'lesson' },
+    { id:'6-r3',title:'Récap 5 & 6',               sub:'Idiomatique + gastronomie avancée',           xp:30, words:0,  type:'recap'  },
+    { id:'6-7', title:'Réclamations & négociation', sub:'Plaintes, remboursements, assertivité',       xp:80, words:22, type:'lesson' },
+    { id:'6-8', title:'Révision Perfectionnement',  sub:'Bilan N6 + quiz final avancé',               xp:100,words:30, type:'lesson' },
+    { id:'6-rf',title:'Grand récap N6',             sub:'Bilan complet Niveau 6',                     xp:100,words:0,  type:'recap'  },
+  ]
+};
+
+// ═══════════════════════════════════════════
 // NIVEAU 5 — CULTURE & HISTOIRE (8 leçons)
 // ═══════════════════════════════════════════
 const NIVEAU5 = {
