@@ -126,6 +126,7 @@ const EX = {
   // ── Niveau 6 (généré automatiquement) ──
   '6-1': EX_6_1,
   '6-2': EX_6_2,
+  '6-3': EX_6_3,
   // ── Niveau 5 — Culture & Histoire (manuel) ──
   'C-1': EX_C_1,
   'C-2': EX_C_2,
